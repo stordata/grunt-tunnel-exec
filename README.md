@@ -24,11 +24,16 @@ In your project's Gruntfile, add a section named `tunnelExec` to the data object
 
 ```js
 grunt.initConfig({
-  tunnelExec: {
-    options: {
-      // Task-specific options go here.
-    }
-  },
+    tunnelExec: {
+        target: {
+            options: {
+                // Options here.
+            },
+            exec: function(err, tunnel){
+                // Do something here
+            }
+        }
+    },
 });
 ```
 
@@ -88,12 +93,42 @@ In this example, the default options are used to start a tunnelExec tunnel. Thes
 
 ```js
 grunt.initConfig({
-  tunnelExec: {
-    options: {
-        remoteHost: 'example.com',
-        targetPort: 1234
-    }
-  },
+    tunnelExec: {
+        myTarget: {
+            options: {
+                remoteHost: 'example.com',
+                targetPort: 1234
+            },
+            exec: function(err, tunnel){
+                // Do your stuff here
+
+                // Require http module, we're requesting an html page
+                var http = require('http');
+
+                // Request the page, listen for the response
+                var request = http.get(
+
+                    // We are using our tunnel!
+                    "http://localhost:1234/myPage.html",
+
+                    function(res){
+
+                        // Print data
+                        res.on('data', function( data ) {
+                            console.log( data.toString() );
+                        });
+
+                        res.on('close', function(){
+                           // After everything is finished, close tunnel
+                           tunnel.done();
+                        });
+
+                    }
+                );
+
+            }
+        }
+    },
 });
 ```
 
@@ -107,26 +142,32 @@ In this example, custom options are used to start the api-mock server in port 12
 
 ```js
 grunt.initConfig({
-  tunnelExec: {
-    options: {
+    tunnelExec: {
+        myTarget: {
+            options: {
 
-        user: 'myUser',
-        identityFile: '~/.ssh/id_dsa.pub',
-        localPort: 1234,
+                user: 'myUser',
+                identityFile: '~/.ssh/id_dsa.pub',
+                localPort: 1234,
 
-        // Host which is being SSH'd
-        remoteHost: 'example.com',
-        remotePort: 2222,
+                // Host which is being SSH'd
+                remoteHost: 'example.com',
+                remotePort: 2222,
 
-        // Target host, will receive the commands executed through the tunnel
-        targetHost: 'host2.example.com',
-        targetPort: 6666,
+                // Target host, will receive the commands executed through the tunnel
+                targetHost: 'host2.example.com',
+                targetPort: 6666,
 
-        // Connection timeout
-        timeout: 10000
+                // Connection timeout
+                timeout: 10000
 
-    }
-  },
+            },
+            exec: function(err, tunnel){
+                // Something, then close the tunnel
+                tunnel.done();
+            }
+        }
+    },
 });
 ```
 
