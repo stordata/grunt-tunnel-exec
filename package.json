@@ -1,7 +1,7 @@
 {
   "name": "grunt-tunnel-exec",
   "description": "Grunt wrapper for tunnel-exec",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/mfgea/grunt-tunnel-exec",
   "author": "Matias Gea <matigea@gmail.com>",
   "repository": {
