@@ -36,7 +36,7 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "tunnel-exec": "git://github.com/stordata/tunnel-exec#2f0983299720fd3c241b6116754af2e652ad1d01"
+    "tunnel-exec": "https://github.com/stordata/tunnel-exec#2f0983299720fd3c241b6116754af2e652ad1d01"
   },
   "main": "tasks/tunnel-exec.js",
   "directories": {
