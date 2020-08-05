@@ -8,7 +8,7 @@
 
 'use strict';
 
-var tunex = require('tunnel-exec');
+var tunex = require('@stordata/tunnel-exec');
 
 module.exports = function(grunt) {
 
